@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap');
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+body{
+  height: 100vh;
+  
+}
+
+.navbar-brand img{
+  border-radius: 50%;
+  width: 50px;
+  height: auto;
+  margin-right: 12px;
+}
+
+.navbar-brand {
+  font-weight: 500;
+  letter-spacing: 0.2rem;
+}
+
+.nav-link{
+  letter-spacing: 0.1rem;
+}
+
+.navbar{
+  background: rgba(0, 0, 0, 0.76);
+  font-size: 18px;
+  
+}
+
+section{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: center;
+}
+
+.container{
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
+.title{
+  letter-spacing: 0.1rem;
+  margin-top: 120px;
+  
+  color: rgb(255, 255, 255) ;
+  
+}
+
+section#home{
+  background: rgba(0,0,0,0.3)url("https://limbonisku.files.wordpress.com/2015/05/a91ec-img_7801.jpg") no-repeat center center/cover ;
+  background-blend-mode: darken;
+  
+}
+
