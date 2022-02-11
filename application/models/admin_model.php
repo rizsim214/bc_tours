@@ -11,4 +11,14 @@ class Admin_Model extends CI_Model {
             return $query->row();
         }
     }
+
+    public function post_category($data){
+        $query = $this->db->insert('sub_categories', $data);
+        if(!$query){
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+
+    }
 }

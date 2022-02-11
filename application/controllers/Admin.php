@@ -6,6 +6,7 @@ class Admin extends CI_Controller {
   public function __construct() {
     parent::__construct();
     $this->load->model('admin_model', 'admin_user');
+    
   }
 
   public function index(){	
@@ -100,6 +101,58 @@ class Admin extends CI_Controller {
        $this->load->view('shared/footer');
 
     }
+  }
+
+  public function validate_category(){
+    $this->form_validation->set_rules('category' , 'Category', 'trim|required');
+    $this->form_validation->set_rules('subcat_name' , 'Sub-Category', 'trim|required');
+    $this->form_validation->set_rules('location' , 'Location', 'trim|required');
+    $this->form_validation->set_rules('direction' , 'Direction', 'trim|required');
+    $this->form_validation->set_rules('description' , 'Category', 'trim|required');
+  }
+  public function add_category(){
+    
+
+    if(!$this->input->post()){
+        $this->session->set_flashdata('error', "Failed to create sub-category! Please try again");
+        redirect('categories');
+    }else{
+      $config = array(
+        'upload_path' => './assets/images/uploads',
+        'allowed_types' => 'jpg|png|jpeg'
+      );
+      $this->load->library('upload', $config);
+      
+       $this->validate_category();
+        if($this->form_validation->run()){
+          if($this->upload->do_upload('image')){
+            $img_data = $this->upload->data('file_name');
+            $format = "%Y-%M-%d %H:%i";
+            $data = array(
+              'category_name' => $this->input->post('category'),
+              'sub_category_name' => $this->input->post('subcat_name'),
+              'sub_cat_description' => $this->input->post('description'),
+              'sub_cat_location' => $this->input->post('location'),
+              'sub_cat_directions' => $this->input->post('direction'),
+              'image' => $img_data,
+              'sub_cat_package_deals' => $this->input->post('package_deals'),
+              'date_created' => @mdate($format)
+            );
+            // var_dump($data);
+            // die();
+            $result = $this->admin_user->post_category($data);
+            if(!$result){
+              $this->session->set_flashdata('error', "Unsuccessful creation of sub-category! Please try again");
+              redirect('categories', 'refresh');
+            }else{
+              $this->session->set_flashdata('success', "Successfully created sub-category!!");
+              redirect('categories', 'refresh');
+            }
+          }
+        }
+       
+
+    } 
   }
 
    public function logout(){
