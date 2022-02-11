@@ -3,7 +3,7 @@
         <h1 class="text-center">Attractions</h1>
         <ul class="nav justify-content-center mb-2">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">All</a>
+                <a class="nav-link" aria-current="page" href="#">All</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Hotels & Restaurants</a>

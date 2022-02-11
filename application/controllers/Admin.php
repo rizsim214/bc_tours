@@ -31,17 +31,82 @@ class Admin extends CI_Controller {
         );
         $result = $this->admin_user->find_user($data);
         
-        if($result == NULL){
-          echo "Error";
-          die();
+        if(!$result){
+          $this->session->set_flashdata('error', 'Invalid Username or Password');
+          redirect(base_url() . "admin", 'refresh');
         }else{
-          echo "Success";
-          die();
+          $data_array = $result;
+          $this->session->set_userdata($data);
+          redirect('dashboard');
+          }
         }
+      }else{
+        redirect('admin');
       }
-    }else{
-      redirect('admin');
-    }
    }
 
+   public function dashboard(){
+     if(!$this->session->userdata()){
+       echo "error";
+       die();
+     }else{
+       $session['data'] = $this->session->userdata();
+
+        $this->load->view('admin/header');
+        $this->load->view('admin/sidenav',$session);
+        $this->load->view('admin/pages/dashboard');
+        $this->load->view('shared/footer');
+
+     }
+   }
+   public function categories(){
+    if(!$this->session->userdata()){
+      echo "error";
+      die();
+    }else{
+      $session['data'] = $this->session->userdata();
+      
+       $this->load->view('admin/header');
+       $this->load->view('admin/sidenav',$session);
+       $this->load->view('admin/pages/categories');
+       $this->load->view('shared/footer');
+
+    }
+  }
+  public function gallery(){
+    if(!$this->session->userdata()){
+      echo "error";
+      die();
+    }else{
+      $session['data'] = $this->session->userdata();
+      
+       $this->load->view('admin/header');
+       $this->load->view('admin/sidenav',$session);
+       $this->load->view('admin/pages/gallery');
+       $this->load->view('shared/footer');
+
+    }
+  }
+  public function messages(){
+    if(!$this->session->userdata()){
+      echo "error";
+      die();
+    }else{
+      $session['data'] = $this->session->userdata();
+      
+       $this->load->view('admin/header');
+       $this->load->view('admin/sidenav',$session);
+       $this->load->view('admin/pages/messages');
+       $this->load->view('shared/footer');
+
+    }
+  }
+
+   public function logout(){
+     if($this->session->userdata()){
+
+       $this->session->unset_userdata($this->session->userdata());
+       redirect('home');
+     }
+   }
 }

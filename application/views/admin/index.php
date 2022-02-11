@@ -1,6 +1,11 @@
 <section class="container ">
     <div class="col-md-5 mx-auto">
         <h3 class="text-center mb-4">Admin Login</h3>
+        <?php if($this->session->flashdata('error')){ ?>
+            <div class="alert alert-danger text-center" role="alert">
+                <?= $this->session->flashdata('error'); ?>
+            </div>
+        <?php }?>
         <?= form_open('admin_login');?>
             <div class="form-group my-3">
                 <?= form_input($data = array(
