@@ -32,7 +32,22 @@ class Admin_Model extends CI_Model {
       return $query->result();
     }
   }
-
+  public function update_one($id, $data){
+    $query = $this->db->where('id', $id)->update('sub_categories', $data);
+    if(!$query){
+      return FALSE;
+    }else{
+      return TRUE;
+    }
+  }
+  public function delete_one($id){
+    $query = $this->db->where('id', $id)->delete('sub_categories');
+    if(!$query){
+      return FALSE;
+      }else{
+        return TRUE;
+      }
+  }
   public function get_category($id){
     $query = $this->db->select('*')->from('sub_categories')->where('id', $id)->get();
 

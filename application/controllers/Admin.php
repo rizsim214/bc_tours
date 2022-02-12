@@ -48,8 +48,7 @@ class Admin extends CI_Controller {
 
    public function dashboard(){
      if(!$this->session->userdata()){
-       echo "error";
-       die();
+      redirect('admin');
      }else{
        $session['data'] = $this->session->userdata();
 
@@ -62,8 +61,7 @@ class Admin extends CI_Controller {
    }
    public function categories(){
     if(!$this->session->userdata()){
-      echo "error";
-      die();
+      redirect('admin');
     }else{
       $session['data'] = $this->session->userdata();
       $data['categories'] = $this->admin_user->get_categories();
@@ -79,17 +77,13 @@ class Admin extends CI_Controller {
 
   public function one_category($id){
     if(!$this->session->userdata()){
-      echo "error";
-      die();
+     redirect('admin');
     }else{
       $session['data'] = $this->session->userdata();
-
       $data['category'] = $this->admin_user->get_category($id);
-      // print_r($data);
-      // die();
 
        $this->load->view('admin/header');
-       $this->load->view('admin/sidenav',$session);
+       $this->load->view('admin/sidenav', $session);
        $this->load->view('admin/pages/one_category', $data);
        $this->load->view('shared/footer');
 
@@ -97,8 +91,7 @@ class Admin extends CI_Controller {
   }
   public function gallery(){
     if(!$this->session->userdata()){
-      echo "error";
-      die();
+      redirect('admin');
     }else{
       $session['data'] = $this->session->userdata();
       
@@ -111,8 +104,7 @@ class Admin extends CI_Controller {
   }
   public function messages(){
     if(!$this->session->userdata()){
-      echo "error";
-      die();
+      redirect('admin');
     }else{
       $session['data'] = $this->session->userdata();
       
@@ -145,7 +137,7 @@ class Admin extends CI_Controller {
       
        $this->validate_category();
         if($this->form_validation->run()){
-          if($this->upload->do_upload('image')){
+           $this->upload->do_upload('image');
             $img_data = $this->upload->data('file_name');
             $format = "%Y-%M-%d %H:%i";
             $data = array(
@@ -165,13 +157,66 @@ class Admin extends CI_Controller {
             }else{
               $this->session->set_flashdata('success', "Successfully created sub-category!!");
               redirect('categories', 'refresh');
-            }
-          }
-        }
-    } 
+            } 
+         }
+      } 
   }
 
-  
+  public function update_one_category($id){
+    $config = array(
+      'upload_path' => './assets/images/uploads',
+      'allowed_types' => 'jpg|png|jpeg'
+    );
+    $this->load->library('upload', $config);
+    if($this->upload->do_upload('image')){
+      $img_data = $this->upload->data('file_name');
+      $format = "%Y-%M-%d %H:%i";
+      $data = array(
+        'category_name' => $this->input->post('category'),
+        'sub_category_name' => $this->input->post('subcat_name'),
+        'sub_cat_description' => $this->input->post('description'),
+        'sub_cat_location' => $this->input->post('location'),
+        'sub_cat_directions' => $this->input->post('direction'),
+        'image' => $img_data,
+        'sub_cat_package_deals' => $this->input->post('package_deals'),
+        'date_updated' => @mdate($format)
+      );
+  }else{
+
+    $format = "%Y-%M-%d %H:%i";
+    $data = array(
+      'category_name' => $this->input->post('category'),
+      'sub_category_name' => $this->input->post('subcat_name'),
+      'sub_cat_description' => $this->input->post('description'),
+      'sub_cat_location' => $this->input->post('location'),
+      'sub_cat_directions' => $this->input->post('direction'),
+      'sub_cat_package_deals' => $this->input->post('package_deals'),
+      'date_updated' => @mdate($format)
+    );
+  }
+    $result = $this->admin_user->update_one($id , $data);
+   
+    if(!$result){
+      $this->session->set_userdata('error', "Unable to update sub-category! Please try again");
+      redirect(base_url('one_category/') . $id);
+    }else{
+      $this->session->set_userdata('success', "Successfully updated sub-category!");
+      redirect(base_url('one_category/') . $id);
+    }
+  }
+
+  public function delete_one_category($id){
+    $result = $this->admin_user->delete_one($id);
+
+    if(!$result){
+      $this->session->set_userdata('error', "Unable to delete sub-category! Please try again");
+      redirect('categories');
+    }else{
+      $this->session->set_userdata('success', "Successfully deleted sub-category");
+      redirect('categories');
+    }
+  }
+
    public function logout(){
      if($this->session->userdata()){
 

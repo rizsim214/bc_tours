@@ -6,6 +6,9 @@
                 function fade_alert(){
                     alert_message.remove() 
                 }, 5000);
+                function confirmation() {
+                    confirm("Are you sure you want to proceed?");
+                }
         </script>
 </body>
 </html>

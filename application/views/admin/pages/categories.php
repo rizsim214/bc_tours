@@ -1,4 +1,4 @@
-    <div class="container mt-3">
+    <div class="container mt-3 ">
         <h1 class="text-center my-2">Categories</h1>
         <div class="col-md-11 mx-auto">
             <div class="row">
@@ -9,7 +9,7 @@
                 <div class="col-md-12 mb-2">
                     <ul class="nav justify-content-center mb-2">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">All</a>
+                            <a class="nav-link" aria-current="page" href="<?= base_url('categories');?>">All</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Hotels & Restaurants</a>
@@ -33,7 +33,9 @@
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title"><?= $category->sub_category_name;?></h5>
-                                <p class="card-text" maxlength="50"><?= $category->sub_cat_description;?></p>
+                                <small class="text-muted"><?= $category->category_name;?></small>
+                                <hr>
+                                <p class="card-text"><?= $category->sub_cat_description;?></p>
                             </div>
                             <div class="card-footer text-center">
                             <a href="<?= base_url('one_category/'.$category->id).'';?>" class="btn btn-outline-primary d-block">Read More</a>
@@ -71,7 +73,7 @@
                             <option value="Mountains & Caves">Mountains & Caves</option>
                         </select>
                         <div class="form-group my-2">
-                            <label for="subcategory" class="my-2">Title</label>
+                            <label for="subcategory" class="my-2">Name</label>
                             <?= form_input($data = array(
                                 'name' => 'subcat_name',
                                 'placeholder' => "Example Resort",
@@ -79,12 +81,11 @@
                                 'id' => 'subcategory'
                             ));?>
                         </div>
-                       
                         <div class="form-group my-2">
                             <label for="location" class="my-2">Location</label>
                             <?= form_input($data = array(
                                 'name' => 'location',
-                                'placeholder' => "Brgy.Sonco Borongan City",
+                                'placeholder' => "location",
                                 'class' => 'form-control ',
                                 'id' => 'location'
                             ));?>
@@ -121,7 +122,7 @@
                             ));?>
                         </div>
                         <div class="form-group my-2">
-                            <label for="image" class="my-2">Direction</label>
+                            <label for="image" class="my-2">Image</label>
                             <?= form_upload($data = array(
                                 'name' => 'image',
                                 'placeholder' => "How to get there?",
