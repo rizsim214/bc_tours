@@ -11,6 +11,7 @@ $route['categories'] = 'admin/categories';
 $route['gallery'] = 'admin/gallery';
 $route['messages'] = 'admin/messages';
 $route['add_category'] = 'admin/add_category';
+$route['one_category/(:num)'] = 'admin/one_category/$1';
 $route['logout'] = 'admin/logout';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

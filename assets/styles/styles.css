@@ -53,7 +53,23 @@ section{
   color: rgb(255, 255, 255) ;
   
 }
+.card-text{
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.card-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
 
+.card img{
+  
+  height: 200px;
+}
 section#home{
   background: rgba(0,0,0,0.2)url("https://limbonisku.files.wordpress.com/2015/05/a91ec-img_7801.jpg") no-repeat center center/cover ;
   background-blend-mode: darken;

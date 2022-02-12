@@ -66,10 +66,31 @@ class Admin extends CI_Controller {
       die();
     }else{
       $session['data'] = $this->session->userdata();
+      $data['categories'] = $this->admin_user->get_categories();
       
+     
+      $this->load->view('admin/header');
+      $this->load->view('admin/sidenav',$session);
+      $this->load->view('admin/pages/categories', $data);
+      $this->load->view('shared/footer');
+
+    }
+  }
+
+  public function one_category($id){
+    if(!$this->session->userdata()){
+      echo "error";
+      die();
+    }else{
+      $session['data'] = $this->session->userdata();
+
+      $data['category'] = $this->admin_user->get_category($id);
+      // print_r($data);
+      // die();
+
        $this->load->view('admin/header');
        $this->load->view('admin/sidenav',$session);
-       $this->load->view('admin/pages/categories');
+       $this->load->view('admin/pages/one_category', $data);
        $this->load->view('shared/footer');
 
     }
@@ -110,9 +131,8 @@ class Admin extends CI_Controller {
     $this->form_validation->set_rules('direction' , 'Direction', 'trim|required');
     $this->form_validation->set_rules('description' , 'Category', 'trim|required');
   }
-  public function add_category(){
-    
 
+  public function add_category(){
     if(!$this->input->post()){
         $this->session->set_flashdata('error', "Failed to create sub-category! Please try again");
         redirect('categories');
@@ -138,8 +158,6 @@ class Admin extends CI_Controller {
               'sub_cat_package_deals' => $this->input->post('package_deals'),
               'date_created' => @mdate($format)
             );
-            // var_dump($data);
-            // die();
             $result = $this->admin_user->post_category($data);
             if(!$result){
               $this->session->set_flashdata('error', "Unsuccessful creation of sub-category! Please try again");
@@ -150,11 +168,10 @@ class Admin extends CI_Controller {
             }
           }
         }
-       
-
     } 
   }
 
+  
    public function logout(){
      if($this->session->userdata()){
 

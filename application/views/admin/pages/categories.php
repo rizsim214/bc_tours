@@ -1,11 +1,51 @@
     <div class="container mt-3">
-        <h1 class="text-center my-4">Categories</h1>
-        <div class="col-md-10 mx-auto">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Create Subcategory
-            </button>
-           <h1>CREATE VIEW PAGE FOR CATEGORIES</h1>
+        <h1 class="text-center my-2">Categories</h1>
+        <div class="col-md-11 mx-auto">
+            <div class="row">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary col-md-2 mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Add Option
+                </button>
+                <div class="col-md-12 mb-2">
+                    <ul class="nav justify-content-center mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#">All</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Hotels & Restaurants</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Beaches & Resorts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Mountains & Caves</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+           <div class="row pb-3">
+            <?php if($categories) {?>
+                <?php foreach($categories as $category) {?>
+                    <div class="col-md-3 mb-3 ">
+                        <div class="card">
+                            <div class="card-header m-0 p-0">
+                                <img src="<?= base_url();?>assets/images/uploads/<?= $category->image;?>" class="img-fluid p-2" alt="Attractions">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $category->sub_category_name;?></h5>
+                                <p class="card-text" maxlength="50"><?= $category->sub_cat_description;?></p>
+                            </div>
+                            <div class="card-footer text-center">
+                            <a href="<?= base_url('one_category/'.$category->id).'';?>" class="btn btn-outline-primary d-block">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            <?php } else {?>
+                <h4 class="font-italic">Nothing To Show</h4>
+            <?php }?>
+            </div>
+           
         </div>
     </div>
 </div>
@@ -25,7 +65,7 @@
                     <div class="form-group col-md-10 mx-auto">
                         <label for="category" class="my-2">Categories</label>
                         <select name="category" id="category" class="form-select form-select-md">
-                            <option selected>Choose Category</option>
+                            <option>Choose Category</option>
                             <option value="Hotel & Restaurants">Hotel & Restaurants</option>
                             <option value="Beaches & Resorts">Beaches & Resorts</option>
                             <option value="Mountains & Caves">Mountains & Caves</option>
@@ -34,7 +74,7 @@
                             <label for="subcategory" class="my-2">Title</label>
                             <?= form_input($data = array(
                                 'name' => 'subcat_name',
-                                'placeholder' => "Melinda's Resort",
+                                'placeholder' => "Example Resort",
                                 'class' => 'form-control ',
                                 'id' => 'subcategory'
                             ));?>
@@ -59,7 +99,7 @@
                             ));?>
                         </div>
                         <div class="form-group my-2">
-                            <label for="description" class="my-2">Sub-Category</label>
+                            <label for="description" class="my-2">Description</label>
                             <?= form_textarea($data = array(
                                 'name' => 'description',
                                 'placeholder' => 'Description of the establishment',
