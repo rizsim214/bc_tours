@@ -1,4 +1,4 @@
-    <div class="container mt-3 ">
+    <div class="container vh-100 mt-3 ">
         <h1 class="text-center my-2">Categories</h1>
         <div class="col-md-11 mx-auto">
             <div class="row">
@@ -12,17 +12,18 @@
                             <a class="nav-link" aria-current="page" href="<?= base_url('categories');?>">All</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Hotels & Restaurants</a>
+                            <a class="nav-link" href="<?= base_url('hr_filter');?>">Hotels & Restaurants</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Beaches & Resorts</a>
+                            <a class="nav-link" href="<?= base_url('br_filter');?>">Beaches & Resorts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Mountains & Caves</a>
+                            <a class="nav-link" href="<?= base_url('mc_filter');?>">Mountains & Caves</a>
                         </li>
                     </ul>
                 </div>
             </div>
+            <?= $this->pagination->create_links();?>
            <div class="row pb-3">
             <?php if($categories) {?>
                 <?php foreach($categories as $category) {?>
@@ -47,7 +48,7 @@
                 <h4 class="font-italic">Nothing To Show</h4>
             <?php }?>
             </div>
-           
+          
         </div>
     </div>
 </div>

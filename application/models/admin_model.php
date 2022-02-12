@@ -21,10 +21,22 @@ class Admin_Model extends CI_Model {
     }
   }
  
+  public function count_categories(){
+    return $this->db->count_all('sub_categories');
+  }
 
-  public function get_categories(){
-    
-    $query = $this->db->get('sub_categories');
+  public function count_categories_where($data){
+    $query = $this->db->where('category_name', $data)->get('sub_categories');
+    return $query->num_rows();
+  }
+  
+  public function fetch_filter($data, $limit, $offset){
+
+    $query = $this->db->limit($limit, $offset)->where('category_name', $data)->get('sub_categories');
+    return $query->result();
+  }
+  public function get_categories($limit, $offset){
+    $query = $this->db->limit($limit,$offset)->get('sub_categories');
     
     if(!$query){
       return FALSE;

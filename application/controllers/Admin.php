@@ -59,14 +59,38 @@ class Admin extends CI_Controller {
 
      }
    }
-   public function categories(){
+   public function categories($offset = 0){
     if(!$this->session->userdata()){
       redirect('admin');
     }else{
+      $config = array(
+        'base_url' => base_url('admin/categories') ,
+        'total_rows' => $this->admin_user->count_categories(),
+        'per_page' => 4,
+        'full_tag_open' => '<ul class="pagination">',
+        'full_tag_close' => '</ul>',
+        'first_link' => 'First',
+        'last_link' => 'Last',
+        'first_tag_open' => '<li class="page-item"><span class="page-link">',
+        'first_tag_close' => '</span></li>',
+        'prev_link' => '&laquo',
+        'prev_tag_open' => '<li class="page-item"><span class="page-link">' ,
+        'prev_tag_close' => '</span></li>',
+        'next_link' => '&raquo',
+        'next_tag_open' => '<li class="page-item"><span class="page-link">',
+        'next_tag_close' => '</span></li>',
+        'last_tag_open' => '<li class="page-item"><span class="page-link">',
+        'last_tag_close' => '</span></li>',
+        'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
+        'cur_tag_close' => '</a></li>',
+        'num_tag_open' => '<li class="page-item"><span class="page-link">',
+        'num_tag_close' => '</span></li>'
+      );
+
+      $this->pagination->initialize($config);
       $session['data'] = $this->session->userdata();
-      $data['categories'] = $this->admin_user->get_categories();
-      
-     
+      $data['categories'] = $this->admin_user->get_categories($config['per_page'], $offset);
+
       $this->load->view('admin/header');
       $this->load->view('admin/sidenav',$session);
       $this->load->view('admin/pages/categories', $data);
@@ -74,11 +98,125 @@ class Admin extends CI_Controller {
 
     }
   }
+  public function hr_filter($offset = 0){
+    $data = "Hotel & Restaurants";
+    $config = array(
+      'base_url' => base_url('admin/hr_filter') ,
+      'total_rows' => $this->admin_user->count_categories_where($data),
+      'per_page' => 4,
+      'full_tag_open' => '<ul class="pagination">',
+      'full_tag_close' => '</ul>',
+      'first_link' => 'First',
+      'last_link' => 'Last',
+      'first_tag_open' => '<li class="page-item"><span class="page-link">',
+      'first_tag_close' => '</span></li>',
+      'prev_link' => '&laquo',
+      'prev_tag_open' => '<li class="page-item"><span class="page-link">' ,
+      'prev_tag_close' => '</span></li>',
+      'next_link' => '&raquo',
+      'next_tag_open' => '<li class="page-item"><span class="page-link">',
+      'next_tag_close' => '</span></li>',
+      'last_tag_open' => '<li class="page-item"><span class="page-link">',
+      'last_tag_close' => '</span></li>',
+      'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
+      'cur_tag_close' => '</a></li>',
+      'num_tag_open' => '<li class="page-item"><span class="page-link">',
+      'num_tag_close' => '</span></li>'
+    );
 
+    $this->pagination->initialize($config);
+    $session['data'] = $this->session->userdata();
+    
+    $result['categories'] = $this->admin_user->fetch_filter($data, $config['per_page'], $offset);
+    
+    if($result){
+      $this->load->view('admin/header');
+      $this->load->view('admin/sidenav',$session);
+      $this->load->view('admin/pages/categories', $result);
+      $this->load->view('shared/footer');
+    }
+  }
+  public function br_filter($offset = 0){
+    $data = "Beaches & Resorts";
+    $config = array(
+      'base_url' => base_url('admin/hr_filter') ,
+      'total_rows' => $this->admin_user->count_categories_where($data),
+      'per_page' => 4,
+      'full_tag_open' => '<ul class="pagination">',
+      'full_tag_close' => '</ul>',
+      'first_link' => 'First',
+      'last_link' => 'Last',
+      'first_tag_open' => '<li class="page-item"><span class="page-link">',
+      'first_tag_close' => '</span></li>',
+      'prev_link' => '&laquo',
+      'prev_tag_open' => '<li class="page-item"><span class="page-link">' ,
+      'prev_tag_close' => '</span></li>',
+      'next_link' => '&raquo',
+      'next_tag_open' => '<li class="page-item"><span class="page-link">',
+      'next_tag_close' => '</span></li>',
+      'last_tag_open' => '<li class="page-item"><span class="page-link">',
+      'last_tag_close' => '</span></li>',
+      'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
+      'cur_tag_close' => '</a></li>',
+      'num_tag_open' => '<li class="page-item"><span class="page-link">',
+      'num_tag_close' => '</span></li>'
+    );
+
+    $this->pagination->initialize($config);
+    $session['data'] = $this->session->userdata();
+    
+    $result['categories'] = $this->admin_user->fetch_filter($data, $config['per_page'], $offset);
+    
+    if($result){
+      $this->load->view('admin/header');
+      $this->load->view('admin/sidenav',$session);
+      $this->load->view('admin/pages/categories', $result);
+      $this->load->view('shared/footer');
+    }
+  }
+  public function mc_filter($offset = 0){
+    $data = "Mountains & Caves";
+    $config = array(
+      'base_url' => base_url('admin/hr_filter') ,
+      'total_rows' => $this->admin_user->count_categories_where($data),
+      'per_page' => 4,
+      'full_tag_open' => '<ul class="pagination">',
+      'full_tag_close' => '</ul>',
+      'first_link' => 'First',
+      'last_link' => 'Last',
+      'first_tag_open' => '<li class="page-item"><span class="page-link">',
+      'first_tag_close' => '</span></li>',
+      'prev_link' => '&laquo',
+      'prev_tag_open' => '<li class="page-item"><span class="page-link">' ,
+      'prev_tag_close' => '</span></li>',
+      'next_link' => '&raquo',
+      'next_tag_open' => '<li class="page-item"><span class="page-link">',
+      'next_tag_close' => '</span></li>',
+      'last_tag_open' => '<li class="page-item"><span class="page-link">',
+      'last_tag_close' => '</span></li>',
+      'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
+      'cur_tag_close' => '</a></li>',
+      'num_tag_open' => '<li class="page-item"><span class="page-link">',
+      'num_tag_close' => '</span></li>'
+    );
+
+    $this->pagination->initialize($config);
+    $session['data'] = $this->session->userdata();
+    
+    $result['categories'] = $this->admin_user->fetch_filter($data, $config['per_page'], $offset);
+    
+    if($result){
+      $this->load->view('admin/header');
+      $this->load->view('admin/sidenav',$session);
+      $this->load->view('admin/pages/categories', $result);
+      $this->load->view('shared/footer');
+    }
+  }
   public function one_category($id){
     if(!$this->session->userdata()){
      redirect('admin');
     }else{
+     
       $session['data'] = $this->session->userdata();
       $data['category'] = $this->admin_user->get_category($id);
 
@@ -89,6 +227,7 @@ class Admin extends CI_Controller {
 
     }
   }
+
   public function gallery(){
     if(!$this->session->userdata()){
       redirect('admin');
