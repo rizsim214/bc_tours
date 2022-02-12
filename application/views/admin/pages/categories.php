@@ -1,29 +1,29 @@
-    <div class="container vh-100 mt-3 ">
-        <h1 class="text-center my-2">Categories</h1>
+    <div class="container  mt-3 ">
+        <h1 class="text-center mt-2">Categories</h1>
         <div class="col-md-11 mx-auto">
             <div class="row">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary col-md-2 mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-primary col-md-2 mb-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Add Option
                 </button>
-                <div class="col-md-12 mb-2">
-                    <ul class="nav justify-content-center mb-2">
-                        <li class="nav-item">
+                <div class="mb-1">
+                    <ul class="nav justify-content-center mb-1">
+                        <li class="nav-item col-xs-4">
                             <a class="nav-link" aria-current="page" href="<?= base_url('categories');?>">All</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item col-xs-4">
                             <a class="nav-link" href="<?= base_url('hr_filter');?>">Hotels & Restaurants</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item col-xs-4">
                             <a class="nav-link" href="<?= base_url('br_filter');?>">Beaches & Resorts</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item col-xs-4">
                             <a class="nav-link" href="<?= base_url('mc_filter');?>">Mountains & Caves</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <?= $this->pagination->create_links();?>
+            <span class="col-md-6 mx-auto"><?= $this->pagination->create_links();?></span>
            <div class="row pb-3">
             <?php if($categories) {?>
                 <?php foreach($categories as $category) {?>

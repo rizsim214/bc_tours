@@ -13,7 +13,7 @@
                     <a class="nav-link text-dark" href="#about">About</a>
                 </li>
                 <li class="nav-item mx-1">
-                    <a class="nav-link text-dark" href="#gallery">Gallery</a>
+                    <a class="nav-link text-dark" href="#attractions">Attractions</a>
                 </li>
                 <li class="nav-item mx-1">
                     <a class="nav-link text-dark" href="#contact">Contact</a>

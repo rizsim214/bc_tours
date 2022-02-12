@@ -33,7 +33,7 @@ class Admin extends CI_Controller {
         $result = $this->admin_user->find_user($data);
         
         if(!$result){
-          $this->session->set_flashdata('error', 'Invalid Username or Password');
+          $this->session->set_userdata('error', 'Invalid Username or Password');
           redirect(base_url() . "admin", 'refresh');
         }else{
           $data_array = $result;
@@ -228,7 +228,7 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function gallery(){
+  public function attractions(){
     if(!$this->session->userdata()){
       redirect('admin');
     }else{
@@ -236,7 +236,7 @@ class Admin extends CI_Controller {
       
        $this->load->view('admin/header');
        $this->load->view('admin/sidenav',$session);
-       $this->load->view('admin/pages/gallery');
+       $this->load->view('admin/pages/attractions');
        $this->load->view('shared/footer');
 
     }
@@ -246,12 +246,38 @@ class Admin extends CI_Controller {
       redirect('admin');
     }else{
       $session['data'] = $this->session->userdata();
-      
-       $this->load->view('admin/header');
-       $this->load->view('admin/sidenav',$session);
-       $this->load->view('admin/pages/messages');
-       $this->load->view('shared/footer');
+      $data['messages'] = $this->admin_user->get_messages();
+     
+      $this->load->view('admin/header');
+      $this->load->view('admin/sidenav',$session);
+      $this->load->view('admin/pages/messages', $data);
+      $this->load->view('shared/footer');
 
+    }
+  }
+  public function view_message($id){
+    $data['message'] = $this->admin_user->find_message($id);
+    $session['data'] = $this->session->userdata();
+    if($data){
+      $this->load->view('admin/header');
+      $this->load->view('admin/sidenav',$session);
+      $this->load->view('admin/pages/message', $data);
+      $this->load->view('shared/footer');
+    }else{
+      $this->session->set_userdata('error', "Unable to delete message... please try again");
+      redirect('messages');
+    }
+  }
+
+  public function delete_message($id){
+    $result = $this->admin_user->delete_one_message($id);
+
+    if($result){
+      $this->session->set_userdata('warning', "Successfully deleted the message");
+      redirect('messages');
+    }else{
+      $this->session->set_userdata('error', "Unable to delete message... please try again");
+      redirect('messages');
     }
   }
 

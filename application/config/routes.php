@@ -4,11 +4,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['default_controller'] = 'welcome';
 $route['home'] = 'welcome/index';
+$route['inquiry'] = 'welcome/inquiry';
+$route['delete_message/(:num)'] = 'admin/delete_message/$1';
+$route['one_message/(:num)'] = 'admin/view_message/$1';
 $route['admin'] = 'admin';
 $route['admin_login'] = 'admin/login';
 $route['dashboard'] = 'admin/dashboard';
 $route['categories'] = 'admin/categories';
-$route['gallery'] = 'admin/gallery';
+$route['attractions'] = 'admin/attractions';
 $route['messages'] = 'admin/messages';
 $route['hr_filter'] = 'admin/hr_filter';
 $route['br_filter'] = 'admin/br_filter';

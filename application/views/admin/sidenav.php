@@ -13,7 +13,7 @@
                 <a href="<?= base_url('categories');?>" class="nav-link text-light" aria-current="page">Categories</a>
             </li>
             <li class="nav-item">
-                <a href="<?= base_url('gallery');?>" class="nav-link text-light" aria-current="page">Gallery</a>
+                <a href="<?= base_url('attractions');?>" class="nav-link text-light" aria-current="page">Attractions</a>
             </li>
             <li class="nav-item">
                 <a href="<?= base_url('messages');?>" class="nav-link text-light" aria-current="page">Messages</a>

@@ -1,4 +1,4 @@
-<section id="gallery" class="container-fluid">
+<section id="attractions" class="container-fluid">
     <div class="mt-5 pt-5">
         <h1 class="text-center">Attractions</h1>
         <ul class="nav justify-content-center mb-2">

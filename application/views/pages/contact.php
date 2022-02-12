@@ -3,8 +3,18 @@
         <div class="mb-3">
             <h3 class="text-center mt-5">Inquiry</h3>
             <p class="text-muted text-center">How can we help you?</p>
+            <?php if($this->session->userdata('error')){ ?>
+                <div class="alert alert-danger text-center" role="alert">
+                    <?= $this->session->userdata('error'); ?>
+                </div>
+                
+            <?php }else if($this->session->userdata('success')){?>
+                <div class="alert alert-success text-center" role="alert">
+                    <?= $this->session->userdata('success'); ?>
+                </div>
+            <?php } ?>
         </div>
-        <?= form_open();?>
+        <?= form_open('inquiry');?>
         
             <div class="form-group my-3">
                 <?= form_input($data = array(
@@ -18,6 +28,7 @@
                 <?= form_input($data = array(
                         'type' => 'text',
                         'name' => 'contact',
+                        'maxlength' => 11,
                         'placeholder' => 'Contact Info',
                         'class' => 'form-control'
                     ));?>

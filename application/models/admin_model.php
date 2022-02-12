@@ -12,6 +12,16 @@ class Admin_Model extends CI_Model {
     }
   }
 
+  public function get_messages(){
+    return $this->db->order_by('id','DESC')->get('inquiry')->result();
+  }
+  public function find_message($id){
+    return $this->db->where('id', $id)->get('inquiry')->row();
+  }
+  public function delete_one_message($id){
+    return $this->db->where('id', $id)->delete('inquiry');
+  }
+
   public function post_category($data){
     $query = $this->db->insert('sub_categories', $data);
     if(!$query){

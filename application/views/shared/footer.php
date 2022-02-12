@@ -4,7 +4,7 @@
             const alert_message = document.querySelector('.alert');
             setTimeout(
                 function fade_alert(){
-                    alert_message.remove() 
+                   
                 }, 5000);
                 function confirmation() {
                     confirm("Are you sure you want to proceed?");
