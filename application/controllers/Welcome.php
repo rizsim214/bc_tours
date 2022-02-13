@@ -7,18 +7,187 @@ class Welcome extends CI_Controller {
     parent::__construct();
 
     $this->load->model('welcome_model', 'welcome_user');
+    $this->load->model('admin_model', 'admin_user');
   }
-  public function index(){
+  public function index($offset = 0){
 
-    $this->load->view('shared/header');
-    $this->load->view('shared/navbar');
-    $this->load->view('pages/home');
-    $this->load->view('pages/about');
-    $this->load->view('pages/attractions');
-    $this->load->view('pages/contact');
-    $this->load->view('shared/footer');
+    $config = array(
+      'base_url' => base_url('welcome/index') ,
+      'total_rows' => $this->admin_user->count_categories(),
+      'per_page' => 4,
+      'full_tag_open' => '<ul class="pagination">',
+      'full_tag_close' => '</ul>',
+      'first_link' => 'First',
+      'last_link' => 'Last',
+      'first_tag_open' => '<li class="page-item"><span class="page-link">',
+      'first_tag_close' => '</span></li>',
+      'prev_link' => '&laquo',
+      'prev_tag_open' => '<li class="page-item"><span class="page-link">' ,
+      'prev_tag_close' => '</span></li>',
+      'next_link' => '&raquo',
+      'next_tag_open' => '<li class="page-item"><span class="page-link">',
+      'next_tag_close' => '</span></li>',
+      'last_tag_open' => '<li class="page-item"><span class="page-link">',
+      'last_tag_close' => '</span></li>',
+      'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
+      'cur_tag_close' => '</a></li>',
+      'num_tag_open' => '<li class="page-item"><span class="page-link">',
+      'num_tag_close' => '</span></li>'
+    );
+    $this->pagination->initialize($config);
+    $result['categories'] = $this->admin_user->get_categories($config['per_page'], $offset);
+    
+    if(!$result){
+      $this->load->view('shared/header');
+      $this->load->view('shared/navbar');
+      $this->load->view('pages/home');
+      $this->load->view('pages/about');
+      $this->load->view('pages/attractions');
+      $this->load->view('pages/contact');
+      $this->load->view('shared/footer');
+    }else{
+      $this->load->view('shared/header');
+      $this->load->view('shared/navbar');
+      $this->load->view('pages/home');
+      $this->load->view('pages/about');
+      $this->load->view('pages/attractions', $result);
+      $this->load->view('pages/contact');
+      $this->load->view('shared/footer');
+    }
   }
 
+  public function br_filter($offset = 0){
+    $data = "Beaches & Resorts";
+    $config = array(
+      'base_url' => base_url('welcome/hr_filter') ,
+      'total_rows' => $this->admin_user->count_categories_where($data),
+      'per_page' => 4,
+      'full_tag_open' => '<ul class="pagination">',
+      'full_tag_close' => '</ul>',
+      'first_link' => 'First',
+      'last_link' => 'Last',
+      'first_tag_open' => '<li class="page-item"><span class="page-link">',
+      'first_tag_close' => '</span></li>',
+      'prev_link' => '&laquo',
+      'prev_tag_open' => '<li class="page-item"><span class="page-link">' ,
+      'prev_tag_close' => '</span></li>',
+      'next_link' => '&raquo',
+      'next_tag_open' => '<li class="page-item"><span class="page-link">',
+      'next_tag_close' => '</span></li>',
+      'last_tag_open' => '<li class="page-item"><span class="page-link">',
+      'last_tag_close' => '</span></li>',
+      'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
+      'cur_tag_close' => '</a></li>',
+      'num_tag_open' => '<li class="page-item"><span class="page-link">',
+      'num_tag_close' => '</span></li>'
+    );
+
+    $this->pagination->initialize($config);
+    $result['categories'] = $this->admin_user->fetch_filter($data, $config['per_page'], $offset);
+    
+    if($result){
+      $this->load->view('shared/header');
+      $this->load->view('shared/navbar');
+      $this->load->view('pages/home');
+      $this->load->view('pages/about');
+      $this->load->view('pages/attractions', $result);
+      $this->load->view('pages/contact');
+      $this->load->view('shared/footer');
+    }
+  }
+
+  public function hr_filter($offset = 0){
+    $data = "Hotel & Restaurants";
+    $config = array(
+      'base_url' => base_url('admin/hr_filter') ,
+      'total_rows' => $this->admin_user->count_categories_where($data),
+      'per_page' => 4,
+      'full_tag_open' => '<ul class="pagination">',
+      'full_tag_close' => '</ul>',
+      'first_link' => 'First',
+      'last_link' => 'Last',
+      'first_tag_open' => '<li class="page-item"><span class="page-link">',
+      'first_tag_close' => '</span></li>',
+      'prev_link' => '&laquo',
+      'prev_tag_open' => '<li class="page-item"><span class="page-link">' ,
+      'prev_tag_close' => '</span></li>',
+      'next_link' => '&raquo',
+      'next_tag_open' => '<li class="page-item"><span class="page-link">',
+      'next_tag_close' => '</span></li>',
+      'last_tag_open' => '<li class="page-item"><span class="page-link">',
+      'last_tag_close' => '</span></li>',
+      'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
+      'cur_tag_close' => '</a></li>',
+      'num_tag_open' => '<li class="page-item"><span class="page-link">',
+      'num_tag_close' => '</span></li>'
+    );
+
+    $this->pagination->initialize($config);
+    
+    
+    $result['categories'] = $this->admin_user->fetch_filter($data, $config['per_page'], $offset);
+    
+    if($result){
+      $this->load->view('shared/header');
+      $this->load->view('shared/navbar');
+      $this->load->view('pages/home');
+      $this->load->view('pages/about');
+      $this->load->view('pages/attractions', $result);
+      $this->load->view('pages/contact');
+      $this->load->view('shared/footer');
+    }
+  }
+
+  public function mc_filter($offset = 0){
+    $data = "Mountains & Caves";
+    $config = array(
+      'base_url' => base_url('welcome/hr_filter') ,
+      'total_rows' => $this->admin_user->count_categories_where($data),
+      'per_page' => 4,
+      'full_tag_open' => '<ul class="pagination">',
+      'full_tag_close' => '</ul>',
+      'first_link' => 'First',
+      'last_link' => 'Last',
+      'first_tag_open' => '<li class="page-item"><span class="page-link">',
+      'first_tag_close' => '</span></li>',
+      'prev_link' => '&laquo',
+      'prev_tag_open' => '<li class="page-item"><span class="page-link">' ,
+      'prev_tag_close' => '</span></li>',
+      'next_link' => '&raquo',
+      'next_tag_open' => '<li class="page-item"><span class="page-link">',
+      'next_tag_close' => '</span></li>',
+      'last_tag_open' => '<li class="page-item"><span class="page-link">',
+      'last_tag_close' => '</span></li>',
+      'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
+      'cur_tag_close' => '</a></li>',
+      'num_tag_open' => '<li class="page-item"><span class="page-link">',
+      'num_tag_close' => '</span></li>'
+    );
+
+    $this->pagination->initialize($config);
+    $result['categories'] = $this->admin_user->fetch_filter($data, $config['per_page'], $offset);
+    
+    if($result){
+      $this->load->view('shared/header');
+      $this->load->view('shared/navbar');
+      $this->load->view('pages/home');
+      $this->load->view('pages/about');
+      $this->load->view('pages/attractions', $result);
+      $this->load->view('pages/contact');
+      $this->load->view('shared/footer');
+    }
+  }
+  public function one_category_home($id){
+   
+      $result['category'] = $this->admin_user->get_category($id);
+
+       $this->load->view('shared/header');
+       $this->load->view('shared/navbar');
+       $this->load->view('pages/one_category_home', $result);
+       $this->load->view('shared/footer');
+
+    
+  }
   public function inquiry(){
     if($this->input->post()){
       $this->form_validation->set_rules('fullname', 'Fullname', 'trim|required');

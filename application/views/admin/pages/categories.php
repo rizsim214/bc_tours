@@ -39,7 +39,7 @@
                                 <p class="card-text"><?= $category->sub_cat_description;?></p>
                             </div>
                             <div class="card-footer text-center">
-                            <a href="<?= base_url('one_category/'.$category->id).'';?>" class="btn btn-outline-primary d-block">Read More</a>
+                                <a href="<?= base_url('one_category/'.$category->id).'';?>" class="btn btn-outline-primary d-block">Read More</a>
                             </div>
                         </div>
                     </div>

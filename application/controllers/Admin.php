@@ -228,19 +228,6 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function attractions(){
-    if(!$this->session->userdata()){
-      redirect('admin');
-    }else{
-      $session['data'] = $this->session->userdata();
-      
-       $this->load->view('admin/header');
-       $this->load->view('admin/sidenav',$session);
-       $this->load->view('admin/pages/attractions');
-       $this->load->view('shared/footer');
-
-    }
-  }
   public function messages(){
     if(!$this->session->userdata()){
       redirect('admin');

@@ -6,5 +6,5 @@ class Welcome_model extends CI_Model {
   public function add_message($data){
     return $this->db->insert('inquiry', $data);
   }
-
+ 
 }
